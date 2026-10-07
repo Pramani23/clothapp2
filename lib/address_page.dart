@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'cart_page.dart';
+import 'settings_page.dart';
+import 'address_page.dart';
+import 'checkout_page.dart';
+
 
 class AddressPage extends StatefulWidget {
   const AddressPage({super.key});

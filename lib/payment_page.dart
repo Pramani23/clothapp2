@@ -3,6 +3,10 @@ import 'cart_page.dart';
 import 'settings_page.dart';
 import 'address_page.dart';
 import 'checkout_page.dart';
+import 'wishlist_page.dart';
+import 'categories_page.dart';
+import 'Home_page1.dart';
+
 
 class PaymentPage extends StatefulWidget {
   const PaymentPage({super.key});
