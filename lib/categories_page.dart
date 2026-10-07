@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home_page.dart';
+import 'home_page_1.dart';
 import 'cart_page.dart';
 import 'settings_page.dart';
 import 'wishlist_page.dart';
@@ -136,7 +136,7 @@ class CategoriesPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => const HomePage()),
+                  MaterialPageRoute(builder: (_) => const HomePageOne()),
                 );
               },
               icon: const Icon(Icons.home_outlined, size: 25),
