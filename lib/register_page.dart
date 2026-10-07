@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'login_page.dart';
-
-import 'home_page.dart';
 
 class RegisterPage extends StatefulWidget {
-
   const RegisterPage({super.key});
 
   @override
@@ -39,7 +35,6 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -178,10 +173,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       onPressed: () => Navigator.pop(context),
                       child: const Text(
                         'Already have an account? Login',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                        ),
+                        style: TextStyle(color: Colors.black, fontSize: 14),
                       ),
                     ),
                   ),
@@ -210,10 +202,7 @@ class _RegisterPageState extends State<RegisterPage> {
         validator: validator,
         decoration: InputDecoration(
           hintText: hintText,
-          hintStyle: const TextStyle(
-            color: Colors.black54,
-            fontSize: 16,
-          ),
+          hintStyle: const TextStyle(color: Colors.black54, fontSize: 16),
           border: const UnderlineInputBorder(),
           enabledBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.black38),
