@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'Home_page1.dart' ;
+import 'home_page.dart';
 import 'cart_page.dart';
 import 'settings_page.dart';
 import 'wishlist_page.dart';
-import 'categories_page.dart' ;
 
 
 class CategoriesPage extends StatelessWidget {

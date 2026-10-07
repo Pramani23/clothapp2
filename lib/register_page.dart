@@ -172,13 +172,16 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const SizedBox(height: 24),
                 Center(
-                  child: TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text(
-                      'Already have an account? Login',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
+                  child: Tooltip(
+                    message: 'Back to login',
+                    child: TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text(
+                        'Already have an account? Login',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                        ),
                       ),
                     ),
                   ),

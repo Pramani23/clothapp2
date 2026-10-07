@@ -1,5 +1,5 @@
 ﻿import 'package:flutter/material.dart';
-import 'home_page1.dart';
+import 'home_page.dart';
 import 'register_page.dart';
 import 'forgot_password_page.dart';
 
@@ -145,20 +145,24 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 30),
               Center(
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const RegisterPage(),
+                child: Tooltip(
+                  message: 'Create a new account',
+                  child: TextButton(
+                    key: const ValueKey('create_new_account_button'),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RegisterPage(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'Create a new account',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
                       ),
-                    );
-                  },
-                  child: const Text(
-                    'Create a new account',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
                     ),
                   ),
                 ),

@@ -5,7 +5,7 @@ import 'address_page.dart';
 import 'checkout_page.dart';
 import 'wishlist_page.dart';
 import 'categories_page.dart';
-import 'Home_page1.dart';
+import 'home_page.dart';
 
 
 class PaymentPage extends StatefulWidget {
