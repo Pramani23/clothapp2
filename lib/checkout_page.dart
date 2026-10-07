@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import 'categories_page.dart';
 
 import 'cart_page.dart';
+import 'categories_page.dart';
 import 'confirm_order_page.dart';
-import 'home_page.dart';
+import 'home_page_1.dart';
 import 'wishlist_page.dart';
+<<<<<<< Updated upstream
 import 'settings_page.dart';
 import 'address_page.dart';
 import 'checkout_page.dart';
 import 'payment_page.dart';
+=======
+>>>>>>> Stashed changes
 
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({super.key});
@@ -180,7 +183,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
             GestureDetector(
               onTap: () {
+<<<<<<< Updated upstream
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
+=======
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const Home_Page_1()));
+>>>>>>> Stashed changes
               },
               child: const Text('🏠', style: TextStyle(fontSize: 21)),
             ),

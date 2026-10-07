@@ -1,5 +1,9 @@
 ﻿import 'package:flutter/material.dart';
+<<<<<<< Updated upstream
 import 'home_page.dart';
+=======
+import 'home_page_1.dart';
+>>>>>>> Stashed changes
 import 'register_page.dart';
 import 'forgot_password_page.dart';
 
@@ -27,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
 
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(builder: (_) => const HomePage()),
+      MaterialPageRoute(builder: (_) => const Home_Page_1()),
       (route) => false,
     );
   }

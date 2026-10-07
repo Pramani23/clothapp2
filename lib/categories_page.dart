@@ -3,6 +3,11 @@ import 'home_page.dart';
 import 'cart_page.dart';
 import 'settings_page.dart';
 import 'wishlist_page.dart';
+<<<<<<< Updated upstream
+=======
+import 'categories_page.dart' ;
+import 'products_page.dart' ;
+>>>>>>> Stashed changes
 
 
 class CategoriesPage extends StatelessWidget {
