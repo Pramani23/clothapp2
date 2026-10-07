@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'wishlist_page.dart';
+import 'categories_page.dart';
+import 'cart_page.dart';
+import 'settings_page.dart';
 
 class HomePageOne extends StatelessWidget {
   const HomePageOne({super.key});
@@ -99,38 +103,20 @@ class HomePageOne extends StatelessWidget {
                 // ---------------- CATEGORIES ----------------
                 const Text(
                   'Categories',
-                  style: TextStyle(
-                    fontSize: 19,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.w500),
                 ),
 
                 const SizedBox(height: 9),
 
                 SizedBox(
-                  height: 95,
+                  height: 110,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      categoryItem(
-                        'Dresses',
-                        'assets/dresses.jpg',
-                      ),
-
-                      categoryItem(
-                        'Tops',
-                        'assets/tops.jpg',
-                      ),
-
-                      categoryItem(
-                        'Western',
-                        'assets/western.jpg',
-                      ),
-
-                      categoryItem(
-                        'Saree',
-                        'assets/saree.jpg',
-                      ),
+                      categoryItem('Dresses', 'assets/dresses.png'),
+                      categoryItem('Tops', 'assets/tops.png'),
+                      categoryItem('Western', 'assets/western.png'),
+                      categoryItem('Saree', 'assets/saree.png'),
                     ],
                   ),
                 ),
@@ -140,23 +126,11 @@ class HomePageOne extends StatelessWidget {
                 // ---------------- BIG BANNER ----------------
                 Container(
                   width: double.infinity,
-                  height: 145,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFE9D8C3),
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        right: 5,
-                        bottom: 0,
-                        child: Image.asset(
-                          'assets/fashion_girl.png',
-                          height: 140,
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ],
+                  height: 180,
+                  color: const Color(0xFFE9D8C3),
+                  child: Image.asset(
+                    'assets/fashion_girl.png',
+                    fit: BoxFit.contain,
                   ),
                 ),
 
@@ -165,27 +139,11 @@ class HomePageOne extends StatelessWidget {
                 // ---------------- PRODUCTS ----------------
                 Row(
                   children: [
-                    productCard(
-                      'assets/dress1.jpg',
-                      'Floral Maxi Dress',
-                      '₹1,299',
-                    ),
-
+                    productCard('assets/dress1.png', 'Floral Maxi Dress', '₹1,299'),
                     const SizedBox(width: 10),
-
-                    productCard(
-                      'assets/top1.jpg',
-                      'White Puff Top',
-                      '₹799',
-                    ),
-
+                    productCard('assets/top1.png', 'White Puff Top', '₹799'),
                     const SizedBox(width: 10),
-
-                    productCard(
-                      'assets/jacket1.jpg',
-                      'Denim Jacket',
-                      '₹1,499',
-                    ),
+                    productCard('assets/jacket1.png', 'Denim Jacket', '₹1,499'),
                   ],
                 ),
 
@@ -201,40 +159,43 @@ class HomePageOne extends StatelessWidget {
         height: 58,
         decoration: const BoxDecoration(
           color: Colors.white,
-          border: Border(
-            top: BorderSide(
-              color: Colors.grey,
-              width: 0.5,
-            ),
-          ),
+          border: Border(top: BorderSide(color: Colors.grey, width: 0.5)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            const Text(
-              '🏠',
-              style: TextStyle(fontSize: 23),
+            const Text('🏠', style: TextStyle(fontSize: 23)),
+
+            GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const WishlistPage()),
+              ),
+              child: const Icon(Icons.favorite_border, size: 27),
             ),
 
-            const Icon(
-              Icons.favorite_border,
-              size: 27,
+            GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const CategoriesPage()),
+              ),
+              child: const Icon(Icons.list, size: 29),
             ),
 
-            const Icon(
-              Icons.list,
-              size: 29,
+            GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const CartPage()),
+              ),
+              child: const Text('🛍️', style: TextStyle(fontSize: 23)),
             ),
 
-            const Text(
-              '🛍️',
-              style: TextStyle(fontSize: 23),
-            ),
-
-            const Icon(
-              Icons.person,
-              size: 28,
-              color: Colors.blueGrey,
+            GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const SettingsPage()),
+              ),
+              child: const Icon(Icons.person, size: 28, color: Colors.blueGrey),
             ),
           ],
         ),
@@ -250,41 +211,25 @@ class HomePageOne extends StatelessWidget {
         children: [
           SizedBox(
             width: 65,
-            height: 68,
+            height: 75,
             child: Image.asset(
               imagePath,
               fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  color: const Color(0xFFE5E5E5),
-                  child: const Icon(
-                    Icons.image,
-                    color: Colors.grey,
-                  ),
-                );
-              },
+              errorBuilder: (_, __, ___) => Container(
+                color: const Color(0xFFE5E5E5),
+                child: const Icon(Icons.image, color: Colors.grey),
+              ),
             ),
           ),
-
           const SizedBox(height: 3),
-
-          Text(
-            name,
-            style: const TextStyle(
-              fontSize: 12,
-            ),
-          ),
+          Text(name, style: const TextStyle(fontSize: 12)),
         ],
       ),
     );
   }
 
   // ---------------- PRODUCT CARD ----------------
-  Widget productCard(
-    String imagePath,
-    String name,
-    String price,
-  ) {
+  Widget productCard(String imagePath, String name, String price) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -297,42 +242,22 @@ class HomePageOne extends StatelessWidget {
                 child: Image.asset(
                   imagePath,
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      color: const Color(0xFFEDEDED),
-                      child: const Icon(
-                        Icons.checkroom,
-                        size: 40,
-                        color: Colors.grey,
-                      ),
-                    );
-                  },
+                  errorBuilder: (_, __, ___) => Container(
+                    color: const Color(0xFFEDEDED),
+                    child: const Icon(Icons.checkroom, size: 40, color: Colors.grey),
+                  ),
                 ),
               ),
-
               const Positioned(
                 right: 4,
                 top: 4,
-                child: Icon(
-                  Icons.favorite_border,
-                  size: 17,
-                  color: Colors.grey,
-                ),
+                child: Icon(Icons.favorite_border, size: 17, color: Colors.grey),
               ),
             ],
           ),
-
           const SizedBox(height: 4),
-
-          Text(
-            name,
-            style: const TextStyle(
-              fontSize: 8,
-            ),
-          ),
-
+          Text(name, style: const TextStyle(fontSize: 8, color: Colors.pink)),
           const SizedBox(height: 2),
-
           Text(
             price,
             style: const TextStyle(

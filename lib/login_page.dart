@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'home_page.dart';
+﻿import 'package:flutter/material.dart';
+import 'home_page1.dart';
 import 'register_page.dart';
 import 'forgot_password_page.dart';
 
@@ -11,33 +11,31 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   void loginUser() {
-    if (emailController.text.isEmpty ||
-        passwordController.text.isEmpty) {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
+    if (email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter email and password'),
-        ),
+        const SnackBar(content: Text('Please enter email and password')),
       );
       return;
     }
 
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(
-        builder: (context) => const HomePage(),
-      ),
+      MaterialPageRoute(builder: (_) => const HomePage()),
       (route) => false,
     );
   }
 
   @override
   void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -45,78 +43,61 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 22),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
-              // Header
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
                     'LUXE',
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 42,
                       fontWeight: FontWeight.bold,
+                      letterSpacing: 1.1,
                     ),
                   ),
-
                   GestureDetector(
                     onTap: () {
-                      Navigator.pop(context);
+                      if (Navigator.canPop(context)) {
+                        Navigator.pop(context);
+                      }
                     },
                     child: const Text(
-                      'X',
+                      'x',
                       style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 34,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
                       ),
                     ),
                   ),
                 ],
               ),
-
-              const SizedBox(height: 55),
-
-              // Login title
+              const SizedBox(height: 40),
               const Text(
                 'Login',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 28,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
-
-              const SizedBox(height: 25),
-
-              // Email
-              TextField(
-                controller: emailController,
+              const SizedBox(height: 24),
+              _buildTextField(
+                controller: _emailController,
+                hintText: 'Email Address',
                 keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                  hintText: 'Email Address',
-                  enabledBorder: UnderlineInputBorder(),
-                  focusedBorder: UnderlineInputBorder(),
-                ),
               ),
-
-              const SizedBox(height: 18),
-
-              // Password
-              TextField(
-                controller: passwordController,
+              const SizedBox(height: 12),
+              _buildTextField(
+                controller: _passwordController,
+                hintText: 'Password',
                 obscureText: true,
-                decoration: const InputDecoration(
-                  hintText: 'Password',
-                  enabledBorder: UnderlineInputBorder(),
-                  focusedBorder: UnderlineInputBorder(),
-                ),
               ),
-
-              // Forgot Password
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
@@ -124,8 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            const ForgotPasswordPage(),
+                        builder: (context) => const ForgotPasswordPage(),
                       ),
                     );
                   },
@@ -138,39 +118,32 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-
-              const SizedBox(height: 20),
-
-              // Login button
+              const SizedBox(height: 18),
               Center(
                 child: SizedBox(
-                  width: 88,
-                  height: 32,
+                  width: 140,
+                  height: 44,
                   child: ElevatedButton(
                     onPressed: loginUser,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFC8B1C8),
                       foregroundColor: Colors.black,
                       elevation: 0,
-                      padding: EdgeInsets.zero,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.zero,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0),
                       ),
                     ),
                     child: const Text(
                       'Login',
                       style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
                 ),
               ),
-
-              const SizedBox(height: 25),
-
-              // Register
+              const SizedBox(height: 30),
               Center(
                 child: TextButton(
                   onPressed: () {
@@ -185,6 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                     'Create a new account',
                     style: TextStyle(
                       color: Colors.black,
+                      fontSize: 15,
                     ),
                   ),
                 ),
@@ -192,6 +166,33 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String hintText,
+    TextInputType keyboardType = TextInputType.text,
+    bool obscureText = false,
+  }) {
+    return TextField(
+      controller: controller,
+      keyboardType: keyboardType,
+      obscureText: obscureText,
+      decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: const TextStyle(
+          color: Colors.black54,
+          fontSize: 16,
+        ),
+        enabledBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.black38),
+        ),
+        focusedBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.black),
+        ),
+        contentPadding: const EdgeInsets.symmetric(vertical: 12),
       ),
     );
   }

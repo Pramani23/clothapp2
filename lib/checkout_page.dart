@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'categories_page.dart';
 
 import 'cart_page.dart';
-import 'categories_page.dart';
 import 'confirm_order_page.dart';
 import 'home_page.dart';
 import 'wishlist_page.dart';

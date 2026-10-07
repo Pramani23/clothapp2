@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'wishlist_page.dart';
+import 'categories_page.dart';
 
 class WishlistPage extends StatelessWidget {
   const WishlistPage({super.key});
