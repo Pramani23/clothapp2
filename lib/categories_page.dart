@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'Home_page1.dart' ;
+import 'cart_page.dart';
+import 'settings_page.dart';
+import 'wishlist_page.dart';
+import 'categories_page.dart' ;
+
 
 class CategoriesPage extends StatelessWidget {
   const CategoriesPage({super.key});
@@ -126,40 +132,50 @@ class CategoriesPage extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-
-            // Home
-            const Text(
-              '🏠',
-              style: TextStyle(
-                fontSize: 21,
-              ),
+            IconButton(
+              tooltip: 'Home',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const HomePage()),
+                );
+              },
+              icon: const Icon(Icons.home_outlined, size: 25),
             ),
-
-            // Wishlist
-            const Icon(
-              Icons.favorite_border,
-              size: 25,
+            IconButton(
+              tooltip: 'Wishlist',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const WishlistPage()),
+                );
+              },
+              icon: const Icon(Icons.favorite_border, size: 25),
             ),
-
-            // Categories
-            const Icon(
-              Icons.list,
-              size: 27,
+            IconButton(
+              tooltip: 'Categories',
+              onPressed: () {},
+              icon: const Icon(Icons.list, size: 27),
             ),
-
-            // Shopping bag
-            const Text(
-              '🛍️',
-              style: TextStyle(
-                fontSize: 21,
-              ),
+            IconButton(
+              tooltip: 'Cart',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const CartPage()),
+                );
+              },
+              icon: const Icon(Icons.shopping_bag_outlined, size: 25),
             ),
-
-            // Profile
-            const Icon(
-              Icons.person,
-              size: 27,
-              color: Colors.blueGrey,
+            IconButton(
+              tooltip: 'Account',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const SettingsPage()),
+                );
+              },
+              icon: const Icon(Icons.person_outline, size: 27),
             ),
           ],
         ),
