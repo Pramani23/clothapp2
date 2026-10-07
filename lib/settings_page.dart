@@ -5,6 +5,11 @@ import 'cart_page.dart';
 import 'categories_page.dart';
 import 'home_page.dart';
 import 'wishlist_page.dart';
+import 'settings_page.dart';
+import 'address_page.dart';
+import 'checkout_page.dart';
+import 'payment_page.dart';
+
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});

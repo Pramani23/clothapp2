@@ -5,6 +5,12 @@ import 'cart_page.dart';
 import 'confirm_order_page.dart';
 import 'home_page.dart';
 import 'wishlist_page.dart';
+import 'settings_page.dart';
+import 'address_page.dart';
+import 'checkout_page.dart';
+import 'payment_page.dart';
+import 'Home_page1.dart';
+import 'confirm_order_page.dart';
 
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({super.key});
@@ -176,7 +182,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
             GestureDetector(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const Home_Page()));
               },
               child: const Text('🏠', style: TextStyle(fontSize: 21)),
             ),
