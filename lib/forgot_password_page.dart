@@ -8,15 +8,11 @@ class ForgotPasswordPage extends StatefulWidget {
 }
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+  final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
 
   void submitEmail() {
-    if (emailController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter your email'),
-        ),
-      );
+    if (!_formKey.currentState!.validate()) {
       return;
     }
 
@@ -41,9 +37,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
 
               // Top header
               Row(
@@ -101,9 +99,20 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   const SizedBox(width: 17),
 
                   Expanded(
-                    child: TextField(
+                    child: TextFormField(
                       controller: emailController,
                       keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'Please enter your email';
+                        }
+                        if (!RegExp(
+                          r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$',
+                        ).hasMatch(value.trim())) {
+                          return 'Enter a valid email address';
+                        }
+                        return null;
+                      },
                       decoration: const InputDecoration(
                         hintText: 'Enter Your Email',
                         hintStyle: TextStyle(
@@ -120,11 +129,15 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             color: Colors.black,
                           ),
                         ),
+                        errorStyle: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12,
+                        ),
                       ),
                     ),
                   ),
-                ],
-              ),
+                  ],
+                ),
 
               const SizedBox(height: 50),
 
@@ -155,6 +168,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               ),
             ],
           ),
+        ),
         ),
       ),
     );

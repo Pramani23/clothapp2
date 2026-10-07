@@ -10,11 +10,9 @@ class EditProfilePage extends StatefulWidget {
 class _EditProfilePageState extends State<EditProfilePage> {
   final nameController = TextEditingController(text: "XYZ");
   final usernameController = TextEditingController(text: "Admin");
-  final emailController =
-      TextEditingController(text: "XYZ@gmail.com");
+  final emailController = TextEditingController(text: "XYZ@gmail.com");
   final genderController = TextEditingController(text: "Female");
-  final mobileController =
-      TextEditingController(text: "4573282907");
+  final mobileController = TextEditingController(text: "4573282907");
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +30,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   padding: EdgeInsets.all(18),
                   child: Text(
                     "LUXE",
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                 ),
 
@@ -53,10 +48,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   padding: EdgeInsets.all(18),
                   child: Text(
                     "Logout",
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.red,
-                    ),
+                    style: TextStyle(fontSize: 12, color: Colors.red),
                   ),
                 ),
               ],
@@ -73,9 +65,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   decoration: BoxDecoration(
                     border: Border(
-                      bottom: BorderSide(
-                        color: Colors.grey.shade300,
-                      ),
+                      bottom: BorderSide(color: Colors.grey.shade300),
                     ),
                   ),
                   child: const Row(
@@ -126,8 +116,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 // Edit profile image
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    Colors.pink.shade100,
+                                backgroundColor: Colors.pink.shade100,
                                 foregroundColor: Colors.black,
                                 elevation: 0,
                               ),
@@ -141,30 +130,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                         const SizedBox(height: 20),
 
-                        _profileText(
-                          "Name",
-                          nameController.text,
-                        ),
+                        _profileText("Name", nameController.text),
 
-                        _profileText(
-                          "Username",
-                          usernameController.text,
-                        ),
+                        _profileText("Username", usernameController.text),
 
-                        _profileText(
-                          "Email ID",
-                          emailController.text,
-                        ),
+                        _profileText("Email ID", emailController.text),
 
-                        _profileText(
-                          "Gender",
-                          genderController.text,
-                        ),
+                        _profileText("Gender", genderController.text),
 
-                        _profileText(
-                          "Mobile Number",
-                          mobileController.text,
-                        ),
+                        _profileText("Mobile Number", mobileController.text),
 
                         const SizedBox(height: 15),
 
@@ -176,8 +150,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               _showEditDialog();
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Colors.pink.shade100,
+                              backgroundColor: Colors.pink.shade100,
                               foregroundColor: Colors.black,
                               elevation: 0,
                             ),
@@ -198,10 +171,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   child: Center(
                     child: Text(
                       "© 2026 Fashion Store. All Rights Reserved.",
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: Colors.grey,
-                      ),
+                      style: TextStyle(fontSize: 10, color: Colors.grey),
                     ),
                   ),
                 ),
@@ -216,17 +186,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
   // Sidebar menu
   static Widget _menuItem(String title) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 18,
-        vertical: 9,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 9),
       child: Text(
         title,
         style: TextStyle(
           fontSize: 12,
-          color: title == "Profile"
-              ? Colors.black
-              : Colors.grey.shade700,
+          color: title == "Profile" ? Colors.black : Colors.grey.shade700,
         ),
       ),
     );
@@ -238,16 +203,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
       padding: const EdgeInsets.only(bottom: 10),
       child: RichText(
         text: TextSpan(
-          style: const TextStyle(
-            fontSize: 12,
-            color: Colors.black,
-          ),
+          style: const TextStyle(fontSize: 12, color: Colors.black),
           children: [
             TextSpan(
               text: "$title : ",
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             TextSpan(text: value),
           ],
@@ -258,20 +218,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   // Edit information dialog
   void _showEditDialog() {
+    final formKey = GlobalKey<FormState>();
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: const Text("Edit Information"),
           content: SingleChildScrollView(
-            child: Column(
-              children: [
-                _dialogField("Name", nameController),
-                _dialogField("Username", usernameController),
-                _dialogField("Email", emailController),
-                _dialogField("Gender", genderController),
-                _dialogField("Mobile Number", mobileController),
-              ],
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  _dialogField("Name", nameController),
+                  _dialogField("Username", usernameController),
+                  _dialogField("Email", emailController),
+                  _dialogField("Gender", genderController),
+                  _dialogField("Mobile Number", mobileController),
+                ],
+              ),
             ),
           ),
           actions: [
@@ -283,8 +247,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
             ElevatedButton(
               onPressed: () {
-                setState(() {});
-                Navigator.pop(context);
+                if (formKey.currentState!.validate()) {
+                  setState(() {});
+                  Navigator.pop(context);
+                }
               },
               child: const Text("Save"),
             ),
@@ -294,20 +260,34 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  static Widget _dialogField(
-    String label,
-    TextEditingController controller,
-  ) {
+  static Widget _dialogField(String label, TextEditingController controller) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
-      child: TextField(
+      child: TextFormField(
         controller: controller,
+        validator: (value) => _validateProfileValue(label, value),
         decoration: InputDecoration(
           labelText: label,
           border: const OutlineInputBorder(),
+          errorStyle: const TextStyle(color: Colors.red, fontSize: 12),
         ),
       ),
     );
+  }
+
+  static String? _validateProfileValue(String label, String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Please enter ${label.toLowerCase()}';
+    }
+    if (label == 'Email' &&
+        !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$').hasMatch(value.trim())) {
+      return 'Enter a valid email address';
+    }
+    if (label == 'Mobile Number' &&
+        !RegExp(r'^\d{10}$').hasMatch(value.trim())) {
+      return 'Enter a valid 10-digit number';
+    }
+    return null;
   }
 
   @override

@@ -1,5 +1,5 @@
 ﻿import 'package:flutter/material.dart';
-import 'home_page1.dart';
+import 'home_page_1.dart';
 import 'register_page.dart';
 import 'forgot_password_page.dart';
 
@@ -11,23 +11,18 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   void loginUser() {
-    final email = _emailController.text.trim();
-    final password = _passwordController.text.trim();
-
-    if (email.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter email and password')),
-      );
+    if (!_formKey.currentState!.validate()) {
       return;
     }
 
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(builder: (_) => const HomePage()),
+      MaterialPageRoute(builder: (_) => const HomePageOne()),
       (route) => false,
     );
   }
@@ -87,16 +82,40 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 24),
-              _buildTextField(
-                controller: _emailController,
-                hintText: 'Email Address',
-                keyboardType: TextInputType.emailAddress,
-              ),
-              const SizedBox(height: 12),
-              _buildTextField(
-                controller: _passwordController,
-                hintText: 'Password',
-                obscureText: true,
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    _buildTextField(
+                      controller: _emailController,
+                      hintText: 'Email Address',
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'Please enter your email';
+                        }
+                        if (!RegExp(
+                          r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$',
+                        ).hasMatch(value.trim())) {
+                          return 'Enter a valid email address';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 12),
+                    _buildTextField(
+                      controller: _passwordController,
+                      hintText: 'Password',
+                      obscureText: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your password';
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                ),
               ),
               Align(
                 alignment: Alignment.centerRight,
@@ -145,20 +164,24 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 30),
               Center(
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const RegisterPage(),
+                child: Tooltip(
+                  message: 'Create a new account',
+                  child: TextButton(
+                    key: const ValueKey('create_new_account_button'),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RegisterPage(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'Create a new account',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
                       ),
-                    );
-                  },
-                  child: const Text(
-                    'Create a new account',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
                     ),
                   ),
                 ),
@@ -175,11 +198,13 @@ class _LoginPageState extends State<LoginPage> {
     required String hintText,
     TextInputType keyboardType = TextInputType.text,
     bool obscureText = false,
+    required String? Function(String?) validator,
   }) {
-    return TextField(
+    return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
       obscureText: obscureText,
+      validator: validator,
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: const TextStyle(
@@ -192,6 +217,7 @@ class _LoginPageState extends State<LoginPage> {
         focusedBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.black),
         ),
+        errorStyle: const TextStyle(color: Colors.red, fontSize: 12),
         contentPadding: const EdgeInsets.symmetric(vertical: 12),
       ),
     );

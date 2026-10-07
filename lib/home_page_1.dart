@@ -4,8 +4,8 @@ import 'categories_page.dart';
 import 'cart_page.dart';
 import 'settings_page.dart';
 
-class HomePageOne extends StatelessWidget {
-  const HomePageOne({super.key});
+class Home_Page_1 extends StatelessWidget {
+  const Home_Page_1({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -271,3 +271,5 @@ class HomePageOne extends StatelessWidget {
     );
   }
 }
+
+typedef HomePageOne = Home_Page_1;
