@@ -4,7 +4,6 @@ import 'cart_page.dart';
 import 'settings_page.dart';
 import 'wishlist_page.dart';
 
-
 class CategoriesPage extends StatelessWidget {
   const CategoriesPage({super.key});
 
@@ -16,7 +15,6 @@ class CategoriesPage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-
             // ---------------- HEADER ----------------
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -25,10 +23,7 @@ class CategoriesPage extends StatelessWidget {
                 children: [
                   const Text(
                     'LUXE',
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
 
                   GestureDetector(
@@ -47,7 +42,7 @@ class CategoriesPage extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 38),
+            const SizedBox(height: 24),
 
             // ---------------- TITLE ----------------
             Padding(
@@ -58,58 +53,43 @@ class CategoriesPage extends StatelessWidget {
                     onTap: () {
                       Navigator.pop(context);
                     },
-                    child: const Icon(
-                      Icons.arrow_back,
-                      size: 27,
-                    ),
+                    child: const Icon(Icons.arrow_back, size: 27),
                   ),
 
                   const SizedBox(width: 43),
 
-                  const Text(
-                    'Categories',
-                    style: TextStyle(
-                      fontSize: 25,
-                    ),
-                  ),
+                  const Text('Categories', style: TextStyle(fontSize: 25)),
                 ],
               ),
             ),
 
-            const SizedBox(height: 52),
+            const SizedBox(height: 28),
 
             // ---------------- CATEGORY GRID ----------------
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 23),
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 25,
-                  mainAxisSpacing: 25,
-                  childAspectRatio: 0.82,
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  const padding = 16.0;
+                  const spacing = 14.0;
+                  final cellWidth =
+                      (constraints.maxWidth - padding * 2 - spacing) / 2;
+                  final cellHeight =
+                      (constraints.maxHeight - padding * 2 - spacing) / 2;
 
-                  children: [
-                    categoryItem(
-                      'assets/category_dress.png',
-                      'Dresses',
-                    ),
-
-                    categoryItem(
-                      'assets/category_top.png',
-                      'Tops',
-                    ),
-
-                    categoryItem(
-                      'assets/category_western.png',
-                      'Western',
-                    ),
-
-                    categoryItem(
-                      'assets/category_saree.png',
-                      'Saree',
-                    ),
-                  ],
-                ),
+                  return GridView.count(
+                    padding: const EdgeInsets.all(padding),
+                    crossAxisCount: 2,
+                    crossAxisSpacing: spacing,
+                    mainAxisSpacing: spacing,
+                    childAspectRatio: cellWidth / cellHeight,
+                    children: [
+                      categoryItem('assets/category_dress.png', 'Dresses'),
+                      categoryItem('assets/category_top.png', 'Tops'),
+                      categoryItem('assets/category_western.png', 'Western'),
+                      categoryItem('assets/category_saree.png', 'Saree'),
+                    ],
+                  );
+                },
               ),
             ),
           ],
@@ -121,12 +101,7 @@ class CategoriesPage extends StatelessWidget {
         height: 55,
         decoration: const BoxDecoration(
           color: Colors.white,
-          border: Border(
-            top: BorderSide(
-              color: Colors.grey,
-              width: 0.5,
-            ),
-          ),
+          border: Border(top: BorderSide(color: Colors.grey, width: 0.5)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -184,41 +159,49 @@ class CategoriesPage extends StatelessWidget {
 
   // ---------------- CATEGORY ITEM ----------------
   Widget categoryItem(String imagePath, String name) {
-    return Column(
-      children: [
-
-        // Category image
-        SizedBox(
-          width: 90,
-          height: 95,
-          child: Image.asset(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset(
             imagePath,
             fit: BoxFit.cover,
-
-            // If image is missing
             errorBuilder: (context, error, stackTrace) {
               return Container(
                 color: const Color(0xFFE8E8E8),
-                child: const Icon(
-                  Icons.image,
-                  size: 40,
-                  color: Colors.grey,
-                ),
+                alignment: Alignment.center,
+                child: const Icon(Icons.image, size: 40, color: Colors.grey),
               );
             },
           ),
-        ),
-
-        const SizedBox(height: 10),
-
-        // Category name
-        Text(
-          name,
-          style: const TextStyle(
-            fontSize: 14,
+          const DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.transparent, Color(0x99000000)],
+                stops: [0.45, 1],
+              ),
+            ),
           ),
-        ),
-      ],
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 14),
+              child: Text(
+                name,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  shadows: [Shadow(color: Colors.black54, blurRadius: 5)],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
