@@ -3,7 +3,6 @@ import 'wishlist_page.dart';
 import 'categories_page.dart';
 import 'cart_page.dart';
 import 'settings_page.dart';
-import 'Home_page1.dart';
 
 class Home_Page_1 extends StatelessWidget {
   const Home_Page_1({super.key});
