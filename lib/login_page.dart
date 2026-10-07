@@ -1,5 +1,5 @@
 ﻿import 'package:flutter/material.dart';
-import 'home_page.dart';
+import 'home_page_1.dart';
 import 'register_page.dart';
 import 'forgot_password_page.dart';
 
@@ -27,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
 
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(builder: (_) => const HomePage()),
+      MaterialPageRoute(builder: (_) => const HomePageOne()),
       (route) => false,
     );
   }
