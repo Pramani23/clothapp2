@@ -161,7 +161,6 @@ class _EditCategoryPageState extends State<EditCategoryPage> {
                                     ),
                                   ),
                                 ],
-                                ),
                               ),
                             ),
                           ],
