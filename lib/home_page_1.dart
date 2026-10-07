@@ -4,8 +4,8 @@ import 'categories_page.dart';
 import 'cart_page.dart';
 import 'settings_page.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePageOne extends StatelessWidget {
+  const HomePageOne({super.key});
 
   @override
   Widget build(BuildContext context) {
