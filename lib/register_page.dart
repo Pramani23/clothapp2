@@ -221,6 +221,7 @@ class _RegisterPageState extends State<RegisterPage> {
           focusedBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.black),
           ),
+          errorStyle: const TextStyle(color: Colors.red, fontSize: 12),
           contentPadding: const EdgeInsets.symmetric(vertical: 10),
         ),
       ),

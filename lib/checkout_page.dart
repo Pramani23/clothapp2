@@ -14,6 +14,7 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
+  final _formKey = GlobalKey<FormState>();
   // 0 = Credit/Debit Card, 1 = UPI, 2 = Cash on Delivery
   int selectedMethod = 2;
 
@@ -44,9 +45,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
 
                 // ---------------- TITLE ----------------
                 Row(
@@ -80,21 +83,62 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
                 const SizedBox(height: 5),
 
-                greyField(fullNameController, 'FullName'),
-                greyField(phoneController, 'Phone Number'),
-                greyField(addressController, 'Address'),
-                greyField(apartmentController, 'Apartment,suite,etc(optional)'),
+                greyField(
+                  fullNameController,
+                  'FullName',
+                  validator: (value) => _required(value, 'Full name'),
+                ),
+                greyField(
+                  phoneController,
+                  'Phone Number',
+                  keyboardType: TextInputType.phone,
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Please enter your phone number';
+                    }
+                    if (!RegExp(r'^\d{10}$').hasMatch(value.trim())) {
+                      return 'Enter a valid 10-digit phone number';
+                    }
+                    return null;
+                  },
+                ),
+                greyField(
+                  addressController,
+                  'Address',
+                  validator: (value) => _required(value, 'Address'),
+                ),
+                greyField(
+                  apartmentController,
+                  'Apartment,suite,etc(optional)',
+                ),
 
                 Row(
                   children: [
                     Expanded(
-                      child: greyField(cityController, 'City'),
+                      child: greyField(
+                        cityController,
+                        'City',
+                        validator: (value) => _required(value, 'City'),
+                      ),
                     ),
 
                     const SizedBox(width: 10),
 
                     Expanded(
-                      child: greyField(pincodeController, 'Pincode'),
+                      child: greyField(
+                        pincodeController,
+                        'Pincode',
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return 'Enter pincode';
+                          }
+                          if (!RegExp(r'^\d{6}$').hasMatch(value.trim())) {
+                            return 'Use 6 digits';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -138,10 +182,14 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     color: const Color(0xFFC8B1C8),
                     child: TextButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => const ConfirmOrderPage()),
-                        );
+                        if (_formKey.currentState!.validate()) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const ConfirmOrderPage(),
+                            ),
+                          );
+                        }
                       },
                       child: const Text(
                         'Place Order',
@@ -155,7 +203,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 ),
 
                 const SizedBox(height: 30),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -213,23 +262,38 @@ class _CheckoutPageState extends State<CheckoutPage> {
   }
 
   // ---------------- GREY FIELD ----------------
-  Widget greyField(TextEditingController controller, String hint) {
+  Widget greyField(
+    TextEditingController controller,
+    String hint, {
+    String? Function(String?)? validator,
+    TextInputType keyboardType = TextInputType.text,
+  }) {
     return Container(
       margin: const EdgeInsets.only(bottom: 5),
       color: const Color(0xFFD9D9D9),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      child: TextField(
+      child: TextFormField(
         controller: controller,
+        keyboardType: keyboardType,
+        validator: validator,
         style: const TextStyle(fontSize: 11, color: Colors.black54),
         decoration: InputDecoration(
           hintText: hint,
           hintStyle: const TextStyle(fontSize: 10, color: Colors.black54),
           border: InputBorder.none,
           isDense: true,
+          errorStyle: const TextStyle(color: Colors.red, fontSize: 11),
           contentPadding: EdgeInsets.zero,
         ),
       ),
     );
+  }
+
+  String? _required(String? value, String label) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Please enter $label';
+    }
+    return null;
   }
 
   // ---------------- PAYMENT OPTION ----------------

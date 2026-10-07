@@ -8,6 +8,7 @@ class EditCategoryPage extends StatefulWidget {
 }
 
 class _EditCategoryPageState extends State<EditCategoryPage> {
+  final _formKey = GlobalKey<FormState>();
   final descriptionController =
       TextEditingController(text: "Western Top");
 
@@ -29,9 +30,11 @@ class _EditCategoryPageState extends State<EditCategoryPage> {
           Container(
             width: 150,
             color: Colors.white,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                 const Padding(
                   padding: EdgeInsets.all(18),
                   child: Text(
@@ -99,9 +102,11 @@ class _EditCategoryPageState extends State<EditCategoryPage> {
                 Expanded(
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.all(30),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
                         // Product image and name
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,6 +161,7 @@ class _EditCategoryPageState extends State<EditCategoryPage> {
                                     ),
                                   ),
                                 ],
+                                ),
                               ),
                             ),
                           ],
@@ -167,6 +173,8 @@ class _EditCategoryPageState extends State<EditCategoryPage> {
                         _fieldTitle("Description"),
                         _textField(
                           descriptionController,
+                          validator: (value) =>
+                              _required(value, 'Description'),
                         ),
 
                         const SizedBox(height: 12),
@@ -175,6 +183,8 @@ class _EditCategoryPageState extends State<EditCategoryPage> {
                         _fieldTitle("Category Name"),
                         _textField(
                           categoryController,
+                          validator: (value) =>
+                              _required(value, 'Category name'),
                         ),
 
                         const SizedBox(height: 12),
@@ -183,6 +193,7 @@ class _EditCategoryPageState extends State<EditCategoryPage> {
                         _fieldTitle("Size"),
                         _textField(
                           sizeController,
+                          validator: (value) => _required(value, 'Size'),
                         ),
 
                         const SizedBox(height: 12),
@@ -192,6 +203,20 @@ class _EditCategoryPageState extends State<EditCategoryPage> {
                         _textField(
                           priceController,
                           keyboardType: TextInputType.number,
+                          validator: (value) {
+                            final price = value?.replaceAll(
+                              RegExp(r'[^0-9.]'),
+                              '',
+                            );
+                            if (price == null || price.isEmpty) {
+                              return 'Please enter a price';
+                            }
+                            if (double.tryParse(price) == null ||
+                                double.parse(price) <= 0) {
+                              return 'Enter a valid price';
+                            }
+                            return null;
+                          },
                         ),
 
                         const SizedBox(height: 20),
@@ -201,14 +226,15 @@ class _EditCategoryPageState extends State<EditCategoryPage> {
                           alignment: Alignment.center,
                           child: ElevatedButton(
                             onPressed: () {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    "Category updated successfully!",
+                              if (_formKey.currentState!.validate()) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      "Category updated successfully!",
+                                    ),
                                   ),
-                                ),
-                              );
+                                );
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.pink.shade100,
@@ -227,7 +253,8 @@ class _EditCategoryPageState extends State<EditCategoryPage> {
                             ),
                           ),
                         ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -290,21 +317,31 @@ class _EditCategoryPageState extends State<EditCategoryPage> {
   static Widget _textField(
     TextEditingController controller, {
     TextInputType keyboardType = TextInputType.text,
+    required String? Function(String?) validator,
   }) {
-    return TextField(
+    return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
+      validator: validator,
       style: const TextStyle(fontSize: 12),
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.grey.shade100,
         border: InputBorder.none,
+        errorStyle: const TextStyle(color: Colors.red, fontSize: 12),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 10,
           vertical: 10,
         ),
       ),
     );
+  }
+
+  static String? _required(String? value, String label) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Please enter $label';
+    }
+    return null;
   }
 
   @override
