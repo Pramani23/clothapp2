@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'login_page.dart';
 
 void main() {
@@ -13,10 +14,12 @@ class LuxeApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'LUXE',
+
       theme: ThemeData(
         primarySwatch: Colors.purple,
         fontFamily: 'Arial',
       ),
+
       home: const LoginPage(),
     );
   }
